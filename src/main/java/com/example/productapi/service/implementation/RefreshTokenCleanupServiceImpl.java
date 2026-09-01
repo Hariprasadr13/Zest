@@ -1,4 +1,4 @@
-package com.example.productapi.service;
+package com.example.productapi.service.implementation;
 
 import com.example.productapi.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import java.time.Instant;
 
 @Service
 @RequiredArgsConstructor
-public class RefreshTokenCleanupService {
+public class RefreshTokenCleanupServiceImpl {
     private final RefreshTokenRepository repository;
 
     @Scheduled(cron = "0 0 * * * *")

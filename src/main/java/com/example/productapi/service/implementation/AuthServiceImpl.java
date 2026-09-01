@@ -1,13 +1,17 @@
-package com.example.productapi.service;
+package com.example.productapi.service.implementation;
 
 import com.example.productapi.dto.auth.*;
-import com.example.productapi.entity.*;
+import com.example.productapi.entity.AppUser;
+import com.example.productapi.entity.RefreshToken;
+import com.example.productapi.entity.Role;
 import com.example.productapi.exception.BadRequestException;
-import com.example.productapi.repository.*;
+import com.example.productapi.repository.AppUserRepository;
+import com.example.productapi.repository.RefreshTokenRepository;
 import com.example.productapi.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +24,7 @@ import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthServiceImpl {
     private final AppUserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final PasswordEncoder passwordEncoder;

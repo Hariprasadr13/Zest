@@ -2,7 +2,7 @@ package com.example.productapi.controller;
 
 import com.example.productapi.dto.auth.*;
 import com.example.productapi.security.JwtService;
-import com.example.productapi.service.AuthService;
+import com.example.productapi.service.implementation.AuthServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,7 +25,7 @@ class AuthControllerTest {
     MockMvc mvc;
 
     @MockitoBean
-    AuthService authService;
+    AuthServiceImpl authService;
 
     @MockitoBean
     JwtService jwtService;
