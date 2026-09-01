@@ -1,0 +1,39 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: product-api-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: productdb2
+      MYSQL_USER: ${DB_USERNAME:-productapp}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-productapp}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build: .
+    container_name: product-api
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/productdb2?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      DB_USERNAME: ${DB_USERNAME:-productapp}
+      DB_PASSWORD: ${DB_PASSWORD:-productapp}
+      JWT_SECRET: ${JWT_SECRET:-change-this-development-secret-key-to-at-least-32-bytes}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000}
+      DDL_AUTO: update
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql_data:

@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: product-api
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/productdb2?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:Hariprasad@13}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: false
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: ${SERVER_PORT:8080}
+  forward-headers-strategy: framework
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-this-secret-to-a-long-random-value-at-least-32-bytes}
+    access-token-expiration-ms: ${JWT_ACCESS_EXPIRATION_MS:900000}
+    refresh-token-expiration-ms: ${JWT_REFRESH_EXPIRATION_MS:604800000}
+  security:
+    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:3000,http://localhost:8080}
+    require-https: ${REQUIRE_HTTPS:false}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
